@@ -33,6 +33,16 @@ module "kinesis_firehose_s3_bucket" {
     Automation  = "Terraform"
   }
 }
+
+resource "aws_cloudwatch_log_group" "fh-to-s3-delivery-log-group" {
+  name = format("/aws/kinesisfirehose/%s-%s-fh-%s", var.project, var.application, var.environment)
+}
+
+resource "aws_cloudwatch_log_stream" "fh-to-s3-delivery-log-stream" {
+  name           = "S3Delivery"
+  log_group_name = aws_cloudwatch_log_group.fh-to-s3-delivery-log-group.name
+}
+
 ```
 
 Creates a Kinesis Data Firehose Delivery Stream that retrieves records from an encrypted Kinesis Data Stream and delivers them to a S3 Bucket encrypted at-rest.
