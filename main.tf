@@ -109,6 +109,15 @@
  *     Automation  = "Terraform"
  *   }
  * }
+* 
+*  resource "aws_cloudwatch_log_group" "fh-to-s3-delivery-log-group" {
+*     name = format("/aws/kinesisfirehose/%s-%s-fh-%s", var.project, var.application, var.environment)
+*  }
+* 
+*  resource "aws_cloudwatch_log_stream" "fh-to-s3-delivery-log-stream" {
+*     name           = "S3Delivery"
+*     log_group_name = aws_cloudwatch_log_group.fh-to-s3-delivery-log-group.name
+*  }
  * ```
  *
  * ## Terraform Version
